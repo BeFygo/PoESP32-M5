@@ -1,0 +1,146 @@
+globals:
+  - id: ble_tracker_scan_parameters_active
+    type: bool
+    restore_value: yes
+    initial_value: "false"
+  - id: bluetooth_proxy_active
+    type: bool
+    restore_value: yes
+    initial_value: "false"
+
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  #Below makes esphome not recognise the device as online, work with projects?
+  name_add_mac_suffix: true
+  project:
+    name: "cls.poesp32"
+    version: "1.1.0"  
+    
+esp32:
+  #board: m5stack-core-esp32
+  board: esp32dev
+  framework:
+    type: esp-idf
+    
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+
+ota:
+  - platform: esphome
+    id: ota_esphome
+  - platform: http_request
+    id: ota_http_request
+
+http_request:
+
+ethernet:
+  type: IP101
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO0_IN
+  power_pin: GPIO5  
+  phy_addr: 1    
+
+switch:
+#  - platform: gpio
+#    id: gate_relay16
+#    pin: GPIO16
+#    name: "Gate Switch 16"
+
+#  - platform: gpio
+#    id: gate_relay17
+#    pin: GPIO17
+#    name: "Gate Switch 17"  
+
+  - platform: template
+    name: BLE Scan Active
+    icon: mdi:bluetooth-transfer
+    id: ble_tracker_active
+    entity_category: diagnostic
+    optimistic: true
+    lambda: |- 
+      return id(ble_tracker_scan_parameters_active) == true;
+    turn_on_action:
+      - globals.set:
+          id: ble_tracker_scan_parameters_active
+          value: 'true'
+      - lambda: |-
+          ble_tracker->set_scan_active(true);
+          ble_tracker->setup();
+    turn_off_action:
+      - globals.set:
+          id: ble_tracker_scan_parameters_active
+          value: 'false'
+      - lambda: |-
+          ble_tracker->set_scan_active(false);
+          ble_tracker->setup();
+
+  - platform: template
+    name: BLE Proxy
+    icon: mdi:bluetooth-connect
+    id: bluetooth_proxy_switch
+    entity_category: diagnostic
+    restore_mode: RESTORE_DEFAULT_ON
+    optimistic: true
+    lambda: |- 
+      return id(ble_proxy)->has_active() == true;
+    turn_on_action:
+      - lambda: |- 
+           id(ble_proxy)->set_active(true);
+      - globals.set:
+          id: bluetooth_proxy_active
+          value: 'true'           
+      - delay: 2s # wait for BluetoothProxy to start up
+    turn_off_action:
+      - lambda: |- 
+           id(ble_proxy)->set_active(false);
+      - globals.set:
+          id: bluetooth_proxy_active
+          value: 'false'                      
+      - delay: 2s # wait for BluetoothProxy to close
+
+
+esp32_ble_tracker:
+  id: ble_tracker
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: False
+
+bluetooth_proxy:
+  active: true
+  id: ble_proxy
+
+button:
+  - platform: safe_mode
+    id: button_safe_mode
+    name: Safe Mode Boot
+
+  - platform: factory_reset
+    id: factory_reset_btn
+    name: Factory reset    
+
+
+sensor:
+  - platform: template
+    name: BLE Proxy
+    icon: mdi:bluetooth-settings
+    id: ${device_name}_ble_connections
+    entity_category: diagnostic
+    unit_of_measurement: "connections"
+    accuracy_decimals: 0    
+    update_interval: 60s    
+    lambda: |-
+      auto bt_proxy = id(ble_proxy);
+      int connections = bt_proxy->get_bluetooth_connections_limit();
+      int free = bt_proxy->get_bluetooth_connections_free();
+      return (connections-free);
+
