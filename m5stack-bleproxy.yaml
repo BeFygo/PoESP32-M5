@@ -1,0 +1,22 @@
+substitutions:
+  name: "m5stack-bleproxy"
+  friendly_name: "M5Stack BLEproxy"
+  device_name: "m5stack_bleproxy"
+
+  
+
+
+update:
+- platform: http_request
+  id: update_http_request
+  name: PoESP32 Firmware
+  source: https://github.com/BeFygo/PoESP32-M5/blob/gh-pages/manifest.json
+  disabled_by_default: true  
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://BeFygo/PoESP32-M5/m5stack-bleproxy.yaml@main
+  import_full_config: false
+
+packages:
+  device_base: !include common/m5stack-bleproxy-base.yaml
