@@ -5,6 +5,7 @@ This repo serves as a template for creating a new ESPHome project.
 It includes a GitHub workflow that will automatically build the configuration(s) and then deploys a simple 
 website via GitHub pages that utilises [ESP Web Tools](https://esphome.github.io/esp-web-tools/) for users to 
 easily install your project onto their device.
+Use our [link](https://befygo.github.io/PoESP32-M5/) to flash this repo directly.
 
 ## Instructions
 
