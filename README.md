@@ -10,4 +10,4 @@ Thanks to @DrJohnM61; @ggaljoen;
 
 ## Links
 
-[Wifi antenna](https://www.amazon.com.be/-/nl/dp/B09PRD4492?ref=ppx_yo2ov_dt_b_fed_asin_title)
+[Wifi antenna](https://www.amazon.com.be/-/nl/dp/B09PRD4492?ref=ppx_yo2ov_dt_b_fed_asin_title?tag=befygo-21)
