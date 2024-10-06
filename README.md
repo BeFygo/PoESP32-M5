@@ -5,7 +5,7 @@ A way to use the M5Stack PoESP32 as a bluetooth-POE adapter with esphome, great 
 ## Instructions
 
 1. Check [DrJohnM61](https://github.com/DrJohnM61/poesp32-esphome/tree/main) on how to connect and program the device.
-2. Flash a blanc [ESPHOME](https://web.esphome.io/) or [link](https://befygo.github.io/PoESP32-M5/) with BLEproxy.
+2. Flash a blanc [ESPHOME](https://web.esphome.io/) firmware or a [custom](https://befygo.github.io/PoESP32-M5/) with BLEproxy.
 3. Connect a u.fl Wifi/BLE antenna
 
 ## Links
