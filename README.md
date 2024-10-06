@@ -1,6 +1,6 @@
 # ESPHome M5Stack PoESP32
 
-A way to use the M5Stack PoESP32 as a bluetooth=POE adapter with esphome, great for bleproxy and madoka thermostats.
+A way to use the M5Stack PoESP32 as a bluetooth-POE adapter with esphome, great for bleproxy and madoka thermostats.
 
 ## Instructions
 
