@@ -8,7 +8,7 @@ A way to use the M5Stack PoESP32 as a bluetooth-POE adapter with esphome and Hom
 2. Flash a blanc [ESPHOME](https://web.esphome.io/) firmware or a [custom](https://befygo.github.io/PoESP32-M5/) with BLEproxy.
 3. Connect a u.fl Wifi/BLE antenna.
 4. Assemble the device and connect to a POE cable.
-5. Start playing with you new device in Home Assistant.
+5. Start playing with your new device in Home Assistant.
 
 ## Links
 
